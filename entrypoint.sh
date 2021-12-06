@@ -1,5 +1,6 @@
 #!/bin/bash
 
+trap exit 0 SIGINT
 source /app/init.sh
 
 echo "$(date +"%Y-%m-%d %H:%m") | ${NAMESPACE} | Starting application"

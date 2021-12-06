@@ -37,7 +37,7 @@ if [ -z "$BACKUP_TYPE" ]; then
 fi
 
 if [ -z "$BACKUP_DIRECTORY" ]; then
-    BACKUP_DIRECTORY=/backup
+    BACKUP_DIRECTORY=/backup/${NAMESPACE}
 fi
 
 if [ -z "$SLEEP_BETWEEN_BACKUPS" ]; then
