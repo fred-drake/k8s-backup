@@ -14,7 +14,7 @@ while true; do
         echo "$(date +"%Y-%m-%d %H:%m") | ${NAMESPACE} | Taking Prometheus snapshot"
         rm -rf /backup/snapshots
         curl -XPOST http://prometheus-server/api/v1/admin/tsdb/snapshot
-        mv /backup/snapshots/* /backup/snapshots/snapshot
+        mv /backup/${NAMESPACE}/snapshots/* /backup/${NAMESPACE}/snapshots/snapshot
     fi
 
     echo "$(date +"%Y-%m-%d %H:%m") | ${NAMESPACE} | Beginning restic backup"
