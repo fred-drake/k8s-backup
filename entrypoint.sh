@@ -12,8 +12,8 @@ while true; do
         pg_dump > /backup/${PG_BACKUP_FILE}
     elif [ "$BACKUP_TYPE" == "prometheus" ]; then
         echo "$(date +"%Y-%m-%d %H:%m") | ${NAMESPACE} | Taking Prometheus snapshot"
-        rm -rf /backup/snapshots
-        curl -XPOST http://prometheus-server/api/v1/admin/tsdb/snapshot
+        rm -rf /backup/${NAMESPACE}/snapshots
+        echo "$(date +"%Y-%m-%d %H:%m") | ${NAMESPACE} | Return status: $(curl -XPOST --silent http://prometheus-server/api/v1/admin/tsdb/snapshot | jq .status)"
         mv /backup/${NAMESPACE}/snapshots/* /backup/${NAMESPACE}/snapshots/snapshot
     fi
 
