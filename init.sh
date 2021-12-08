@@ -4,7 +4,16 @@ if [ -z "$NAMESPACE" ]; then
     exit 1;
 fi
 
-if [ "$BACKUP_TYPE" == "postgresql" ]; then
+elementIn () {
+  local e match="$1"
+  shift
+  for e; do [[ "$e" == "$match" ]] && return 0; done
+  return 1
+}
+
+IFS=',' read -ra BACKUP_TYPES_ARRAY <<< "$BACKUP_TYPES"
+
+if elementIn "postgresql" "${BACKUP_TYPES_ARRAY[@]}"; then
     if [ -z "$PG_HOST" ]; then
         echo "PG_HOST environment variable is not set!"
         exit 1;
@@ -32,7 +41,7 @@ if [ "$BACKUP_TYPE" == "postgresql" ]; then
 fi
 
 # Set defaults if not explicitly defined in the container definition
-if [ -z "$BACKUP_TYPE" ]; then
+if [ -z "$BACKUP_TYPES" ]; then
     BACKUP_TYPE="volume"
 fi
 
