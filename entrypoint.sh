@@ -21,7 +21,7 @@ while true; do
     done
 
     echo "$(date +"%Y-%m-%d %H:%m") | ${NAMESPACE} | Beginning restic backup"
-    restic backup ${BACKUP_DIRECTORY} --tag automated,${NAMESPACE}
+    restic backup ${BACKUP_DIRECTORY} --tag automated --tag ${NAMESPACE}
     echo "$(date +"%Y-%m-%d %H:%m") | ${NAMESPACE} | Backup completed. Sleeping ${SLEEP_BETWEEN_BACKUPS} seconds."
     sleep ${SLEEP_BETWEEN_BACKUPS}
 done
