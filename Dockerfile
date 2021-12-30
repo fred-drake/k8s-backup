@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y lsb-release wget gnupg && \
 RUN echo 'alias restore-pg="PGPASSWORD=$PG_PASSWORD psql -U $PG_USER -h $PG_HOST -d $PG_DATABASE < /backup/$NAMESPACE/postgresql/$PG_BACKUP_FILE"' >> /root/.bashrc && \
     echo 'alias snapshots="restic snapshots --tag $NAMESPACE"' >> /root/.bashrc && \
     echo 'alias restore="restic restore --target /"' >> /root/.bashrc
+ADD aliases /app/
 ADD init.sh /app/
 ADD entrypoint.sh /app/
 
