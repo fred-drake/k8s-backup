@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y lsb-release wget gnupg && \
     apt-get update && apt-get install -y restic postgresql-client curl jq postgresql-client-14 && \
     rm -rf /var/lib/apt/lists/*
     
+ADD bashrc /root/.bashrc
 ADD init.sh /app/
 ADD entrypoint.sh /app/
 
