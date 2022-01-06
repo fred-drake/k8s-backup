@@ -21,7 +21,7 @@ while true; do
         fi
     done
 
-    if [ "$OKAY" == 1 ]; then
+    if [ "$OKAY" == 0 ]; then
         echo "Errors were found previously.  Not running restic backup."
     else
         echo "$(date +"%Y-%m-%d %H:%M") | ${NAMESPACE} | Beginning restic backup"
