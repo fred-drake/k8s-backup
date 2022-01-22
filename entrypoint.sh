@@ -6,6 +6,10 @@ source /app/init.sh
 echo "$(date +"%Y-%m-%d %H:%M") | ${NAMESPACE} | Starting application"
 while true; do 
     OKAY=1
+    if [ ! -z "$PRE_COMMAND" ]; then
+        /bin/sh -c $PRE_COMMAND | OKAY=0
+    fi
+
     for TYPE in "${BACKUP_TYPES_ARRAY[@]}"; do
         if [ "$TYPE" == "postgresql" ]; then
             echo "$(date +"%Y-%m-%d %H:%M") | ${NAMESPACE} | Beginning PostgreSQL database dump"
