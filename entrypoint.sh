@@ -7,7 +7,8 @@ echo "$(date +"%Y-%m-%d %H:%M") | ${NAMESPACE} | Starting application"
 while true; do 
     OKAY=1
     if [ ! -z "$PRE_COMMAND" ]; then
-        /bin/sh -c $PRE_COMMAND | OKAY=0
+        /bin/sh -c "$PRE_COMMAND"
+        OKAY=$?
     fi
 
     for TYPE in "${BACKUP_TYPES_ARRAY[@]}"; do
