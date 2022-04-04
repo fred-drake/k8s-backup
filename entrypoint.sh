@@ -20,6 +20,25 @@ while true; do
                 mkdir -p /backup/${NAMESPACE}/postgresql
                 pg_dump --username ${PG_USER} --host ${PG_HOST} --port ${PG_PORT} ${PG_DATABASE} > /backup/${NAMESPACE}/postgresql/${PG_BACKUP_FILE}
                 RC=$?
+            elif [ "$TYPE" == "mysql" ]; then
+                echo "$(date +"%Y-%m-%d %H:%M") | ${NAMESPACE} | Beginning MySQL database dump"
+                echo "[mysqldump]" > ~/.my.cnf
+                echo "user=${MYSQL_USER}" >> ~/.my.cnf
+                echo "password=${MYSQL_PASSWORD}" >> ~/.my.cnf
+                echo "[mysql]" >> ~/.my.cnf
+                echo "user=${MYSQL_USER}" >> ~/.my.cnf
+                echo "password=${MYSQL_PASSWORD}" >> ~/.my.cnf
+                chmod 600 ~/.my.cnf
+                mkdir -p /backup/${NAMESPACE}/mysql
+                if [ ! -z "$MYSQL_DATABASE" ]; then
+                    echo "Backing up database ${MYSQL_DATABASE}"
+                    mysqldump -h ${MYSQL_HOST} ${MYSQL_DATABASE} > /backup/${NAMESPACE}/mysql/${MYSQL_BACKUP_FILE}
+                    RC=$?
+                else
+                    echo "Backing up all databases"
+                    mysqldump -h ${MYSQL_HOST} --all-databases > /backup/${NAMESPACE}/mysql/${MYSQL_BACKUP_FILE}
+                    RC=$?
+                fi
             elif [ "$TYPE" == "prometheus" ]; then
                 echo "$(date +"%Y-%m-%d %H:%M") | ${NAMESPACE} | Taking Prometheus snapshot"
                 rm -rf /backup/${NAMESPACE}/snapshots

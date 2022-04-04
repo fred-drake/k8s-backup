@@ -40,6 +40,23 @@ if elementIn "postgresql" "${BACKUP_TYPES_ARRAY[@]}"; then
     fi
 fi
 
+if elementIn "mysql" "${BACKUP_TYPES_ARRAY[@]}"; then
+    if [ -z "$MYSQL_USER" ]; then
+        echo "MYSQL_USER environment variable is not set!"
+        exit 1;
+    fi
+
+    if [ -z "$MYSQL_PASSWORD" ]; then
+        echo "MYSQL_PASSWORD environment variable is not set!"
+        exit 1;
+    fi
+
+    if [ -z "$MYSQL_HOST" ]; then
+        echo "MYSQL_HOST environment variable is not set!"
+        exit 1;
+    fi
+fi
+
 # Set defaults if not explicitly defined in the container definition
 if [ -z "$BACKUP_TYPES" ]; then
     BACKUP_TYPE="volume"
